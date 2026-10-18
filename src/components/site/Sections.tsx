@@ -60,7 +60,7 @@ export function Specialties() {
         <SectionHead eyebrow="Especialidades" title="Cuidado completo para toda a família" desc="Diversas áreas médicas integradas para um diagnóstico mais preciso e um tratamento contínuo." />
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {SPECIALTIES.map((s, i) => {
-            const Icon = SPEC_ICONS[i];
+            const Icon = SPEC_ICONS[i] ?? Stethoscope;
             return (
               <article key={s.name} className="group rounded-3xl border border-border bg-card p-7 transition-all hover:-translate-y-1 hover:shadow-soft">
                 <span className="grid h-14 w-14 place-items-center rounded-2xl bg-brand text-primary-foreground transition-transform group-hover:scale-105"><Icon className="h-6 w-6" aria-hidden /></span>

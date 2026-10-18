@@ -35,7 +35,7 @@ function Painel() {
     e.preventDefault();
     const f = new FormData(e.currentTarget);
     const nome = String(f.get("nome") || "").trim();
-    if (!nome) return toast.error("Informe o nome do paciente.");
+    if (!nome) { toast.error("Informe o nome do paciente."); return; }
     setPatients((p) => [{ nome, idade: String(f.get("idade") || "—"), tipo: String(f.get("tipo") || "—"), proxima: String(f.get("proxima") || "") }, ...p]);
     e.currentTarget.reset();
     toast.success("Paciente cadastrado com sucesso.");
