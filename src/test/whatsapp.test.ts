@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { buildWhatsAppMessage, buildWhatsAppUrl } from "@/lib/whatsapp";
+import { CLINIC } from "@/data/clinic";
 
 const p = { nome: "Ana Lima", cpf: "529.982.247-25", nascimento: "1990-05-12", telefone: "(21) 99999-0000", email: "a@b.com", profissional: "Dra. Mariana Costa", especialidade: "Cardiologia", mes: "Março" };
 
