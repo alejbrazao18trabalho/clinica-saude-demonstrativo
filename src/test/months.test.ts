@@ -18,7 +18,7 @@ describe("Mês desejado options", () => {
     for (let m = 0; m < 12; m++) {
       for (const option of getMonthOptions(new Date(2026, m, 1))) {
         expect(option).not.toMatch(/\d/);
-        expect(option[0]).toBe(option[0].toUpperCase());
+        expect(option.charAt(0)).toBe(option.charAt(0).toUpperCase());
       }
     }
   });

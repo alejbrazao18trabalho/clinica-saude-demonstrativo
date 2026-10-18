@@ -1,7 +1,7 @@
-const MONTHS = [
+const MONTHS: readonly string[] = [
   "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
   "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro",
-] as const;
+];
 
 export const SCHEDULE_MONTH_COUNT = 4;
 
@@ -14,5 +14,10 @@ export function getMonthOptions(
   count: number = SCHEDULE_MONTH_COUNT,
 ): string[] {
   const start = now.getMonth();
-  return Array.from({ length: count }, (_, i) => MONTHS[(start + i) % 12]);
+  const options: string[] = [];
+  for (let i = 0; i < count; i++) {
+    const name = MONTHS[(start + i) % 12];
+    if (name) options.push(name);
+  }
+  return options;
 }
