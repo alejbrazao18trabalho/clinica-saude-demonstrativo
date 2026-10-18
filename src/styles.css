@@ -144,3 +144,35 @@ h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.02em; }
 @keyframes pulse-ring { 0% { box-shadow: 0 0 0 0 oklch(0.72 0.12 170 / .6); } 100% { box-shadow: 0 0 0 18px oklch(0.72 0.12 170 / 0); } }
 @utility animate-pulse-ring { animation: pulse-ring 2s infinite; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { animation: none !important; transition: none !important; } }
+
+/* ---------- Fluid design scale ---------- */
+:root {
+  --fs-display: clamp(2.1rem, 1.2rem + 4.2vw, 4.25rem);
+  --fs-h2: clamp(1.7rem, 1.2rem + 2.1vw, 2.75rem);
+  --fs-h3: clamp(1.05rem, 0.95rem + 0.45vw, 1.35rem);
+  --fs-lead: clamp(1rem, 0.92rem + 0.4vw, 1.2rem);
+  --space-section: clamp(3.5rem, 2rem + 6vw, 7rem);
+  --space-gutter: clamp(1rem, 0.5rem + 2.5vw, 2.5rem);
+  --space-gap: clamp(1rem, 0.6rem + 1.6vw, 2rem);
+  --fab-size: clamp(2.75rem, 2.3rem + 1.4vw, 3.5rem);
+  --fab-offset: clamp(0.75rem, 0.4rem + 1.2vw, 1.5rem);
+}
+@utility text-fluid-display { font-size: var(--fs-display); line-height: 1.05; }
+@utility text-fluid-h2 { font-size: var(--fs-h2); line-height: 1.12; }
+@utility text-fluid-h3 { font-size: var(--fs-h3); line-height: 1.3; }
+@utility text-fluid-lead { font-size: var(--fs-lead); line-height: 1.6; }
+@utility py-section { padding-block: var(--space-section); }
+@utility px-gutter { padding-inline: var(--space-gutter); }
+@utility gap-fluid { gap: var(--space-gap); }
+@utility container-fluid { width: 100%; max-width: 80rem; margin-inline: auto; padding-inline: var(--space-gutter); }
+@utility grid-auto-cards { display: grid; gap: var(--space-gap); grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); }
+@utility grid-auto-wide { display: grid; gap: var(--space-gap); grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); }
+@utility grid-auto-split { display: grid; gap: var(--space-gap); grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); }
+@utility fab { width: var(--fab-size); height: var(--fab-size); }
+@utility fab-offset { bottom: var(--fab-offset); }
+@utility img-fluid { display: block; width: 100%; max-width: 100%; height: auto; }
+
+@layer base {
+  img, video, iframe { max-width: 100%; }
+  img { height: auto; }
+}

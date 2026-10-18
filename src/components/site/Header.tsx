@@ -41,7 +41,7 @@ export function Header() {
         scrolled ? "border-border bg-background/85 shadow-soft backdrop-blur-lg" : "border-transparent bg-background",
       )}
     >
-      <div className="mx-auto grid h-18 max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-4 py-3 sm:px-6 lg:grid-cols-[auto_1fr_auto]">
+      <div className="container-fluid grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 py-[clamp(0.5rem,1.2vw,0.85rem)] lg:grid-cols-[auto_1fr_auto]">
         <Logo />
         <nav aria-label="Navegação principal" className="hidden justify-center lg:flex">
           <ul className="flex items-center gap-1">
