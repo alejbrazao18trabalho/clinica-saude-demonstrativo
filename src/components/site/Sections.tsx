@@ -1,5 +1,6 @@
+import { Button } from "@/components/ui/button";
 import {
-  Baby, Bone, Clock, HeartPulse, Mail, MapPin, Phone, Quote, Sparkles, Star, Stethoscope, Target, Eye, HandHeart, Flower2,
+  Baby, Bone, CalendarPlus, Clock, HeartPulse, Mail, MapPin, Phone, Quote, Sparkles, Star, Stethoscope, Target, Eye, HandHeart, Flower2,
 } from "lucide-react";
 import { CLINIC, DOCTORS, SPECIALTIES, TESTIMONIALS } from "@/data/clinic";
 import team from "@/assets/team.jpg";
