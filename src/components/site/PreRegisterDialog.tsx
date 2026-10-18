@@ -7,6 +7,8 @@ import { CLINIC, SPECIALTIES } from "@/data/clinic";
 import { isValidCPF, maskCPF, maskPhone } from "@/lib/validation";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 import { getMonthOptions } from "@/lib/months";
+import { birthDateError } from "@/lib/dates";
+import { BirthDatePicker } from "@/components/site/BirthDatePicker";
 
 type Errors = Partial<Record<"nome" | "cpf" | "email" | "telefone" | "nascimento" | "especialidade" | "mes", string>>;
 export type DoctorPick = { name: string; specialty: string } | null;
@@ -16,6 +18,7 @@ const selectCls = "flex h-9 w-full rounded-md border border-input bg-transparent
 export function PreRegisterDialog({ open, onOpenChange, doctor = null }: { open: boolean; onOpenChange: (o: boolean) => void; doctor?: DoctorPick }) {
   const [cpf, setCpf] = useState("");
   const [phone, setPhone] = useState("");
+  const [birth, setBirth] = useState("");
   const [errors, setErrors] = useState<Errors>({});
 
   useEffect(() => { if (open) setErrors({}); }, [open, doctor]);
@@ -28,7 +31,7 @@ export function PreRegisterDialog({ open, onOpenChange, doctor = null }: { open:
     const f = new FormData(e.currentTarget);
     const nome = String(f.get("nome") || "").trim();
     const email = String(f.get("email") || "").trim();
-    const nascimento = String(f.get("nascimento") || "");
+    const nascimento = birth;
     const especialidade = doctor ? doctor.specialty : String(f.get("especialidade") || "");
     const mes = String(f.get("mes") || "");
     const errs: Errors = {};
@@ -36,7 +39,8 @@ export function PreRegisterDialog({ open, onOpenChange, doctor = null }: { open:
     if (!isValidCPF(cpf)) errs.cpf = "CPF inválido.";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errs.email = "E-mail inválido.";
     if (phone.replace(/\D/g, "").length < 10) errs.telefone = "Telefone inválido.";
-    if (!nascimento || new Date(nascimento) > new Date()) errs.nascimento = "Data inválida.";
+    const birthErr = birthDateError(birth);
+    if (birthErr) errs.nascimento = birthErr;
     if (!especialidade) errs.especialidade = "Escolha uma especialidade.";
     if (!mes) errs.mes = "Escolha o mês desejado.";
     setErrors(errs);
@@ -45,7 +49,7 @@ export function PreRegisterDialog({ open, onOpenChange, doctor = null }: { open:
       nome, cpf, nascimento, telefone: phone, email, profissional: doctor?.name, especialidade, mes,
     });
     window.open(url, "_blank", "noopener,noreferrer");
-    setCpf(""); setPhone(""); onOpenChange(false);
+    setCpf(""); setPhone(""); setBirth(""); onOpenChange(false);
   }
 
   const field = (id: keyof Errors, label: string, input: React.ReactNode) => (
@@ -69,7 +73,8 @@ export function PreRegisterDialog({ open, onOpenChange, doctor = null }: { open:
         <form onSubmit={submit} noValidate className="grid gap-4 sm:grid-cols-2">
           <div className="sm:col-span-2">{field("nome", "Nome completo", <Input id="nome" name="nome" maxLength={100} autoComplete="name" {...aria("nome")} />)}</div>
           {field("cpf", "CPF", <Input id="cpf" inputMode="numeric" value={cpf} onChange={(e) => setCpf(maskCPF(e.target.value))} placeholder="000.000.000-00" {...aria("cpf")} />)}
-          {field("nascimento", "Data de nascimento", <Input id="nascimento" name="nascimento" type="date" {...aria("nascimento")} />)}
+          {field("nascimento", "Data de nascimento",
+            <BirthDatePicker id="nascimento" value={birth} onChange={setBirth} error={errors.nascimento} />)}
           {field("telefone", "Telefone", <Input id="telefone" inputMode="tel" value={phone} onChange={(e) => setPhone(maskPhone(e.target.value))} placeholder="(21) 90000-0000" {...aria("telefone")} />)}
           {field("email", "E-mail", <Input id="email" name="email" type="email" maxLength={255} autoComplete="email" {...aria("email")} />)}
           {doctor && (
