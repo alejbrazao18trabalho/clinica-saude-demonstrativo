@@ -11,6 +11,10 @@ describe("WhatsApp pre-registration", () => {
     expect(m.startsWith("Olá, gostaria de agendar uma consulta.")).toBe(true);
   });
   it("targets the clinic number", () => {
-    expect(buildWhatsAppUrl("5521934567890", p)).toMatch(/^https:\/\/wa\.me\/5521934567890\?text=/);
+    expect(buildWhatsAppUrl("5521994254575", p)).toMatch(/^https:\/\/wa\.me\/5521994254575\?text=/);
+  });
+  it("uses the real clinic contact everywhere", () => {
+    expect(CLINIC.whatsapp).toBe("5521994254575");
+    expect(CLINIC.phone).toBe("(21) 99425-4575");
   });
 });

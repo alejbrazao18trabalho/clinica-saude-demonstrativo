@@ -7,8 +7,8 @@ import doc4 from "@/assets/doc-4.jpg";
 export const CLINIC = {
   name: "Vitalis",
   tagline: "Clínica Integrada",
-  phone: "(21) 3456-7890",
-  whatsapp: "5521934567890",
+  phone: "(21) 99425-4575",
+  whatsapp: "5521994254575",
   instagram: "https://instagram.com/",
   email: "contato@vitalisclinica.com.br",
   address: "Av. Rio Branco, 156 — Sala 1201, Centro, Rio de Janeiro — RJ, 20040-003",
