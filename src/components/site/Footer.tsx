@@ -5,7 +5,7 @@ import { Logo } from "./Header";
 export function Footer() {
   return (
     <footer className="bg-primary text-primary-foreground">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="container-fluid grid-auto-cards py-[clamp(3rem,6vw,4rem)]">
         <div>
           <Logo light />
           <p className="mt-4 text-sm text-primary-foreground/75">Saúde integrada e humanizada no Rio de Janeiro.</p>
