@@ -1,24 +1,45 @@
+import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
+import { Header } from "@/components/site/Header";
+import { Hero } from "@/components/site/Hero";
+import { About, Location, Professionals, Specialties, Testimonials } from "@/components/site/Sections";
+import { Footer } from "@/components/site/Footer";
+import { FloatingActions } from "@/components/site/FloatingActions";
+import { PreRegisterDialog } from "@/components/site/PreRegisterDialog";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Vitalis Clínica Integrada — Saúde humanizada no Rio de Janeiro" },
+      { name: "description", content: "Cardiologia, pediatria, dermatologia e mais. Agende sua consulta na Vitalis, no Centro do Rio de Janeiro." },
+      { property: "og:title", content: "Vitalis Clínica Integrada" },
+      { property: "og:description", content: "Saúde humanizada com especialistas e tecnologia no Centro do Rio." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
+  const [open, setOpen] = useState(false);
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <>
+      <a href="#conteudo" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground">
+        Pular para o conteúdo
+      </a>
+      <Header />
+      <main id="conteudo">
+        <Hero onSchedule={() => setOpen(true)} />
+        <About />
+        <Specialties />
+        <Professionals />
+        <Testimonials />
+        <Location />
+      </main>
+      <Footer />
+      <FloatingActions onSchedule={() => setOpen(true)} />
+      <PreRegisterDialog open={open} onOpenChange={setOpen} />
+    </>
   );
 }
