@@ -1,6 +1,6 @@
 export type PreRegister = {
   nome: string; cpf: string; nascimento: string; telefone: string; email: string;
-  profissional?: string; especialidade: string; mes: string;
+  profissional?: string | undefined; especialidade: string; mes: string;
 };
 
 export function formatBirth(iso: string) {
