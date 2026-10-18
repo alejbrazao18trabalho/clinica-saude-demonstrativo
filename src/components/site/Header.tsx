@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "@tanstack/react-router";
-import { HeartPulse, LogIn, Menu, X } from "lucide-react";
+import { CalendarPlus, HeartPulse, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CLINIC, NAV } from "@/data/clinic";
 import { cn } from "@/lib/utils";
@@ -23,7 +22,7 @@ export function Logo({ light = false }: { light?: boolean }) {
   );
 }
 
-export function Header() {
+export function Header({ onSchedule }: { onSchedule: () => void }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -58,10 +57,8 @@ export function Header() {
           </ul>
         </nav>
         <div className="flex items-center gap-2">
-          <Button asChild variant="brand" size="default" className="hidden sm:inline-flex">
-            <Link to="/painel">
-              <LogIn className="h-4 w-4" aria-hidden /> Área da Equipe
-            </Link>
+          <Button variant="brand" size="default" className="hidden sm:inline-flex" onClick={onSchedule}>
+            <CalendarPlus className="h-4 w-4" aria-hidden /> Agendar Consulta
           </Button>
           <Button
             variant="ghost"
@@ -87,8 +84,8 @@ export function Header() {
               </li>
             ))}
           </ul>
-          <Button asChild variant="brand" className="w-full sm:hidden">
-            <Link to="/painel"><LogIn className="h-4 w-4" aria-hidden /> Área da Equipe</Link>
+          <Button variant="brand" className="w-full sm:hidden" onClick={() => { setOpen(false); onSchedule(); }}>
+            <CalendarPlus className="h-4 w-4" aria-hidden /> Agendar Consulta
           </Button>
         </nav>
       )}
