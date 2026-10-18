@@ -33,7 +33,7 @@ export function Hero({ onSchedule }: { onSchedule: () => void }) {
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex">
           {SLIDES.map((s, i) => (
-            <div key={i} className="relative aspect-[3/4] max-h-[88vh] min-w-0 flex-[0_0_100%] sm:aspect-video lg:aspect-[21/9] lg:min-h-[34rem]" aria-roledescription="slide" aria-label={`${i + 1} de ${SLIDES.length}`}>
+            <div key={i} className="relative min-h-[max(34rem,88svh)] sm:min-h-0 sm:max-h-[88vh] min-w-0 flex-[0_0_100%] sm:aspect-video lg:aspect-[21/9] lg:min-h-[34rem]" aria-roledescription="slide" aria-label={`${i + 1} de ${SLIDES.length}`}>
               <img src={s.src} alt={s.alt} width={1600} height={912} className="img-fluid h-full object-cover" loading={i === 0 ? "eager" : "lazy"} />
             </div>
           ))}

@@ -24,7 +24,7 @@ export function About() {
   return (
     <section id="sobre" className="py-section">
       <div className="container-fluid grid-auto-split items-center">
-        <div className="relative">
+        <div className="relative min-w-0">
           <div className="absolute -left-4 -top-4 h-full w-full rounded-[clamp(1.25rem,3vw,2rem)] bg-accent/40" aria-hidden />
           <img src={team} alt="Equipe médica da clínica reunida" width={1024} height={1200} loading="lazy" className="img-fluid relative aspect-[4/5] max-h-[80vh] rounded-[clamp(1.25rem,3vw,2rem)] object-cover shadow-soft" />
           <div className="absolute -bottom-6 right-6 rounded-2xl bg-card p-5 shadow-soft">
