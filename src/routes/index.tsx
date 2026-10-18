@@ -5,7 +5,7 @@ import { Hero } from "@/components/site/Hero";
 import { About, Location, Professionals, Specialties, Testimonials } from "@/components/site/Sections";
 import { Footer } from "@/components/site/Footer";
 import { FloatingActions } from "@/components/site/FloatingActions";
-import { PreRegisterDialog } from "@/components/site/PreRegisterDialog";
+import { PreRegisterDialog, type DoctorPick } from "@/components/site/PreRegisterDialog";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -23,23 +23,25 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const [open, setOpen] = useState(false);
+  const [doctor, setDoctor] = useState<DoctorPick>(null);
+  const schedule = () => { setDoctor(null); setOpen(true); };
   return (
     <>
       <a href="#conteudo" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground">
         Pular para o conteúdo
       </a>
-      <Header />
+      <Header onSchedule={schedule} />
       <main id="conteudo">
-        <Hero onSchedule={() => setOpen(true)} />
+        <Hero onSchedule={schedule} />
         <About />
         <Specialties />
-        <Professionals />
+        <Professionals onScheduleDoctor={(d) => { setDoctor(d); setOpen(true); }} />
         <Testimonials />
         <Location />
       </main>
       <Footer />
-      <FloatingActions onSchedule={() => setOpen(true)} />
-      <PreRegisterDialog open={open} onOpenChange={setOpen} />
+      <FloatingActions onSchedule={schedule} />
+      <PreRegisterDialog key={doctor?.name ?? "geral"} open={open} onOpenChange={setOpen} doctor={doctor} />
     </>
   );
 }

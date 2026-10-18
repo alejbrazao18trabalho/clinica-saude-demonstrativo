@@ -1,5 +1,6 @@
+import { Button } from "@/components/ui/button";
 import {
-  Baby, Bone, Clock, HeartPulse, Mail, MapPin, Phone, Quote, Sparkles, Star, Stethoscope, Target, Eye, HandHeart, Flower2,
+  Baby, Bone, CalendarPlus, Clock, HeartPulse, Mail, MapPin, Phone, Quote, Sparkles, Star, Stethoscope, Target, Eye, HandHeart, Flower2,
 } from "lucide-react";
 import { CLINIC, DOCTORS, SPECIALTIES, TESTIMONIALS } from "@/data/clinic";
 import team from "@/assets/team.jpg";
@@ -73,28 +74,31 @@ export function Specialties() {
   );
 }
 
-export function DoctorCard({ name, specialty, crm, photo }: (typeof DOCTORS)[number]) {
+export function DoctorCard({ name, specialty, crm, photo, onSchedule }: (typeof DOCTORS)[number] & { onSchedule: () => void }) {
   return (
-    <article className="group overflow-hidden rounded-3xl border border-border bg-card transition-all hover:-translate-y-1 hover:shadow-soft">
+    <article className="group flex flex-col overflow-hidden rounded-3xl border border-border bg-card transition-all hover:-translate-y-1 hover:shadow-soft">
       <div className="overflow-hidden bg-muted">
         <img src={photo} alt={`Foto de ${name}`} width={768} height={896} loading="lazy" className="img-fluid aspect-[6/7] object-cover transition-transform duration-500 group-hover:scale-105" />
       </div>
-      <div className="p-5">
-        <span className="rounded-full bg-accent/50 px-3 py-1 text-xs font-bold text-accent-foreground">{specialty}</span>
+      <div className="flex flex-1 flex-col p-5">
+        <span className="self-start rounded-full bg-accent/50 px-3 py-1 text-xs font-bold text-accent-foreground">{specialty}</span>
         <h3 className="mt-3 text-fluid-h3 font-bold text-primary">{name}</h3>
         <p className="text-sm text-muted-foreground">{crm}</p>
+        <Button variant="brand" className="mt-4 w-full rounded-full" onClick={onSchedule} aria-label={`Agendar consulta com ${name}`}>
+          <CalendarPlus className="h-4 w-4" aria-hidden /> Agendar Consulta
+        </Button>
       </div>
     </article>
   );
 }
 
-export function Professionals() {
+export function Professionals({ onScheduleDoctor }: { onScheduleDoctor: (d: { name: string; specialty: string }) => void }) {
   return (
     <section id="profissionais" className="py-section">
       <div className="container-fluid">
         <SectionHead eyebrow="Corpo clínico" title="Profissionais que fazem a diferença" desc="Especialistas com sólida formação e o compromisso de tratar cada paciente como único." />
         <div className="grid-auto-cards">
-          {DOCTORS.map((d) => <DoctorCard key={d.crm} {...d} />)}
+          {DOCTORS.map((d) => <DoctorCard key={d.crm} {...d} onSchedule={() => onScheduleDoctor({ name: d.name, specialty: d.specialty })} />)}
         </div>
       </div>
     </section>
