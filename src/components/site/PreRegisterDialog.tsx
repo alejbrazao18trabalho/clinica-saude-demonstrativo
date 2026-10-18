@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,11 +6,11 @@ import { Label } from "@/components/ui/label";
 import { CLINIC, SPECIALTIES } from "@/data/clinic";
 import { isValidCPF, maskCPF, maskPhone } from "@/lib/validation";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
+import { getMonthOptions } from "@/lib/months";
 
 type Errors = Partial<Record<"nome" | "cpf" | "email" | "telefone" | "nascimento" | "especialidade" | "mes", string>>;
 export type DoctorPick = { name: string; specialty: string } | null;
 
-const MONTHS = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 const selectCls = "flex h-9 w-full rounded-md border border-input bg-transparent px-3 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-80";
 
 export function PreRegisterDialog({ open, onOpenChange, doctor = null }: { open: boolean; onOpenChange: (o: boolean) => void; doctor?: DoctorPick }) {
@@ -20,12 +20,8 @@ export function PreRegisterDialog({ open, onOpenChange, doctor = null }: { open:
 
   useEffect(() => { if (open) setErrors({}); }, [open, doctor]);
 
-  // Next 12 months starting from the current one
-  const now = new Date();
-  const monthOptions = Array.from({ length: 12 }, (_, i) => {
-    const d = new Date(now.getFullYear(), now.getMonth() + i, 1);
-    return `${MONTHS[d.getMonth()]} de ${d.getFullYear()}`;
-  });
+  // Booking window recomputed from the visitor's clock: current month + next 3
+  const monthOptions = useMemo(() => getMonthOptions(), []);
 
   function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
